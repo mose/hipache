@@ -13,14 +13,19 @@
 from	ubuntu:12.04
 run	echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 run	apt-get -y update
-run	apt-get -y install wget git redis-server supervisor
+run	apt-get -y install wget git redis-server supervisor openssh-server
 run	wget -O - http://nodejs.org/dist/v0.10.25/node-v0.10.25-linux-x64.tar.gz | tar -C /usr/local/ --strip-components=1 -zxv
-run	npm install hipache -g
+run     git clone https://github.com/dotcloud/hipache.git
+run	cd hipache && npm install . -g
 run	mkdir -p /var/log/supervisor
 add	./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 add	./config/config_dev.json /usr/local/lib/node_modules/hipache/config/config_dev.json
 add	./config/config_test.json /usr/local/lib/node_modules/hipache/config/config_test.json
 add	./config/config.json /usr/local/lib/node_modules/hipache/config/config.json
+run      echo "root:docker" | chpasswd
+RUN     mkdir -p /var/run/sshd
+
+expose	22
 expose	80
 expose	6379
 cmd	["supervisord", "-n"]
