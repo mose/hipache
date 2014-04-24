@@ -13,9 +13,10 @@
 from	ubuntu:12.04
 run	echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 run	apt-get -y update
+run apt-get -y updgrade
 run	apt-get -y install wget git redis-server supervisor openssh-server
 run	wget -O - http://nodejs.org/dist/v0.10.25/node-v0.10.25-linux-x64.tar.gz | tar -C /usr/local/ --strip-components=1 -zxv
-run     git clone https://github.com/dotcloud/hipache.git
+run     git clone https://github.com/mose/hipache.git
 run	cd hipache && npm install . -g
 run	mkdir -p /var/log/supervisor
 add	./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
