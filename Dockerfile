@@ -11,7 +11,8 @@
 # DOCKER-VERSION	0.4.0
 
 from	ubuntu:12.04
-run	echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
+run echo "deb http://us.archive.ubuntu.com/ubuntu precise main restricted universe multiverse" > /etc/apt/sources.list
+run	echo "deb http://us.archive.ubuntu.com/ubuntu precise-updates main restricted universe multiverse" >> /etc/apt/sources.list
 run	apt-get -y update
 run apt-get -y upgrade
 run	apt-get -y install wget git redis-server supervisor openssh-server
